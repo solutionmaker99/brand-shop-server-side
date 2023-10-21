@@ -25,14 +25,20 @@ const client = new MongoClient(uri, {
 async function run() {
   try {
     // Connect the client to the server	(optional starting in v4.7)
-    await client.connect();
+    // await client.connect();
 
     const productCollection = client.db("productDB").collection("product");
+    const cardCollection = client.db("cardDB").collection("card");
 
     app.get("/product", async (req, res) => {
       const cursor = await productCollection.find().toArray();
       res.send(cursor);
     });
+
+    // app.get("/card", async (req, res) => {
+    //   const cursor = await cardCollection.find().toArray();
+    //   res.send(cursor);
+    // });
 
     // read product
 
@@ -51,6 +57,13 @@ async function run() {
       const result = await productCollection.insertOne(newProduct);
       res.send(result);
     });
+    app.post("/card/", async (req, res) => {
+      const newProduct = req.body;
+      console.log(newProduct);
+      const result = await productCollection.insertOne(newProduct);
+      res.send(result);
+    });
+    // create product
 
     // update product
 
@@ -62,12 +75,12 @@ async function run() {
       const product = {
         $set: {
           name: updateProduct.name,
-          quantity: updateProduct.quantity,
-          supplier: updateProduct.supplier,
-          taste: updateProduct.taste,
-          category: updateProduct.category,
-          details: updateProduct.details,
           photo: updateProduct.photo,
+          price: updateProduct.price,
+          brand: updateProduct.brand,
+          type: updateProduct.type,
+          category: updateProduct.category,
+          rating: updateProduct.rating,
         },
       };
       const result = await productCollection.updateOne(filter, product, option);
