@@ -9,7 +9,7 @@ const port = process.env.PORT || 5000;
 app.use(express.json());
 app.use(cors());
 
-const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.i3pr0m5.mongodb.net/?retryWrites=true&w=majority`;
+const uri = `mongodb+srv://AkhiIslam:XuOZ6v0UH7gdTj4I@cluster0.i3pr0m5.mongodb.net/?retryWrites=true&w=majority`;
 
 console.log(uri);
 
@@ -28,19 +28,11 @@ async function run() {
     // await client.connect();
 
     const productCollection = client.db("productDB").collection("product");
-    const cardCollection = client.db("cardDB").collection("card");
 
     app.get("/product", async (req, res) => {
       const cursor = await productCollection.find().toArray();
       res.send(cursor);
     });
-
-    // app.get("/card", async (req, res) => {
-    //   const cursor = await cardCollection.find().toArray();
-    //   res.send(cursor);
-    // });
-
-    // read product
 
     app.get("/product/:id", async (req, res) => {
       const id = req.params.id;
@@ -57,13 +49,6 @@ async function run() {
       const result = await productCollection.insertOne(newProduct);
       res.send(result);
     });
-    app.post("/card/", async (req, res) => {
-      const newProduct = req.body;
-      console.log(newProduct);
-      const result = await productCollection.insertOne(newProduct);
-      res.send(result);
-    });
-    // create product
 
     // update product
 
