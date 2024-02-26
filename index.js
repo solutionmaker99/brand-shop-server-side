@@ -13,7 +13,6 @@ const uri = `mongodb+srv://AkhiIslam:XuOZ6v0UH7gdTj4I@cluster0.i3pr0m5.mongodb.n
 
 console.log(uri);
 
-// Create a MongoClient with a MongoClientOptions object to set the Stable API version
 const client = new MongoClient(uri, {
   serverApi: {
     version: ServerApiVersion.v1,
@@ -24,9 +23,6 @@ const client = new MongoClient(uri, {
 
 async function run() {
   try {
-    // Connect the client to the server	(optional starting in v4.7)
-    // await client.connect();
-
     const productCollection = client.db("productDB").collection("product");
 
     app.get("/product", async (req, res) => {
